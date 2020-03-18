@@ -10,7 +10,7 @@ window.addEventListener('load', function(){
 
 function validateEntries(){
    console.log ('validateEntries function fired');
-   
+
    // setting items needed to validate entries
    let pilotName = document.getElementById('pilotName');
    let copiolotName = document.getElementById('copilotName');
@@ -51,6 +51,9 @@ function validateEntries(){
          launchStatus.style.color="red";
          launchStatus.innerHTML="Shuttle not ready for launch"
          event.preventDefault();
+      } else {
+         fuelStatus.style.backgroundColor="#ECF0F1";
+         fuelStatus.innerHTML="Fuel level high enough for launch";
       }
       if (parseInt(cargoMass.value)>10000){
          faultyItems.style.visibility="visible";
@@ -59,6 +62,9 @@ function validateEntries(){
          launchStatus.style.color="red";
          launchStatus.innerHTML="Shuttle not ready for launch";
          event.preventDefault();
+      } else {
+         cargoStatus.style.backgroundColor="#ECF0F1";
+         cargoStatus.innerHTML="Cargo mass low enough for launch";
       }
       if (parseInt(cargoMass.value)<=10000&&parseInt(fuelLevel.value)>=10000){
          faultyItems.style.visibility="visible"
