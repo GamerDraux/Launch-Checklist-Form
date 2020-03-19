@@ -1,11 +1,37 @@
-let formSubmit = "";
-
+/* This block of code shows how to format the HTML once you fetch some planetary JSON!
+<h2>Mission Destination</h2>
+<ol>
+   <li>Name: ${}</li>
+   <li>Diameter: ${}</li>
+   <li>Star: ${}</li>
+   <li>Distance from Earth: ${}</li>
+   <li>Number of Moons: ${}</li>
+</ol>
+<img src="${}">
+*/
 window.addEventListener('load', function(){
    console.log ('window loaded');
-   formSubmit = document.getElementById('formSubmit');
+   let formSubmit = document.getElementById('formSubmit');
    formSubmit.addEventListener('click', function(){
       validateEntries();
    });
+   const responsePromise = fetch("https://handlers.education.launchcode.org/static/planets.json");
+   responsePromise.then(function(response){
+      const jsonPromise= response.json();
+      jsonPromise.then(function(json){
+         let randomDestination = Math.round((Math.random())*5);
+         let destinationElement = document.getElementById('missionTarget');
+         destinationElement.innerHTML =`<h2>Mission Destination</h2>
+         <ol>
+            <li>Name: ${json[randomDestination].name}</li>
+            <li>Diameter: ${json[randomDestination].diameter}</li>
+            <li>Star: ${json[randomDestination].star}</li>
+            <li>Distance from Earth: ${json[randomDestination].distance}</li>
+            <li>Number of Moons: ${json[randomDestination].moons}</li>
+         </ol>
+         <img src="${json[randomDestination].image}">`
+      })
+   })
 });
 
 function validateEntries(){
@@ -32,10 +58,8 @@ function validateEntries(){
       // once entries have been validated, setting the names of the pilot and copilot
       let pilotStatus = document.getElementById('pilotStatus');
       pilotStatus.innerHTML=(`Pilot Ready: ${pilotName.value}`);
-      console.log (pilotStatus.innerHTML);
       let copilotStatus = document.getElementById('copilotStatus');
       copilotStatus.innerHTML = (`Co-Pilot Ready: ${copiolotName.value}`);
-      console.log (copilotStatus.innerHTML);
 
       // getting elements needed for setting mission status
       let faultyItems=document.getElementById('faultyItems');
@@ -86,14 +110,3 @@ function validateEntries(){
 
 
 
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!
-<h2>Mission Destination</h2>
-<ol>
-   <li>Name: ${}</li>
-   <li>Diameter: ${}</li>
-   <li>Star: ${}</li>
-   <li>Distance from Earth: ${}</li>
-   <li>Number of Moons: ${}</li>
-</ol>
-<img src="${}">
-*/
